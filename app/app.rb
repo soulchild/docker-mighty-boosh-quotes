@@ -1,5 +1,7 @@
 require 'sinatra'
 
+set :bind, '0.0.0.0'
+
 quotes = [
 "Howard Moon: I'm an explorer.
 Vince Noir: I thought you were a writer?
