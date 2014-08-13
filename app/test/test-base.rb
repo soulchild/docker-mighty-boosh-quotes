@@ -27,6 +27,6 @@ class MightyQuotesTest < MiniTest::Unit::TestCase
   def test_it_returns_a_specific_quote
     get '/0'
     assert last_response.ok?
-    assert_equal 'first quote', last_response.body
+    assert_equal 'irst quote', last_response.body
   end
 end
