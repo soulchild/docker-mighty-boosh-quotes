@@ -1,8 +1,12 @@
-require 'sinatra'
+require 'sinatra/base'
 
-set :bind, '0.0.0.0'
+class MightyQuotes < Sinatra::Application
+  set :bind, '0.0.0.0'
 
-quotes = [
+  class << self
+    # class methods
+    def quotes
+      [
 "Howard Moon: I'm an explorer.
 Vince Noir: I thought you were a writer?
 Howard Moon: I do many things. I span the genres - they call me the genre spanner.
@@ -19,7 +23,7 @@ Howard Moon: Give me the amulet, you bitch!",
 
 "Howard Moon: Just imagine the headlines 'Howard Moon, Colon, Explorer'. Got a ring to that don't it?
 Vince Noir: Colon Explorer?
-Howard Moon: You know what I saying.
+Howard Moon: You know what I'm saying.
 Vince Noir: I think that's got the wrong ring to it.",
 
 "Howard Moon: The wind is my only friend.
@@ -28,9 +32,23 @@ Wind: [whistling] I hate you.",
 "Old Gregg: What do you think of me?
 Howard Moon: I don't rightly know, Sir.
 Old Gregg: Make an assessment.",
-]
+      ]
+    end
+  end
 
-get '/' do
-    content_type 'text/plain'
-    quotes.sample
+  before do
+      content_type 'text/plain'
+  end
+
+  get '/' do
+      self.class.quotes.sample
+  end
+
+  get '/:id' do
+      pass unless params[:id] =~ /^\d+$/
+      self.class.quotes[params[:id].to_i] or pass
+  end
+
+  # start the server if ruby file executed directly
+  run! if app_file == $0
 end
