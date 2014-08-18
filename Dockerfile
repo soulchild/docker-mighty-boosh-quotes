@@ -15,7 +15,7 @@ RUN apt-get update
 RUN apt-get install -y bundler
 
 # Copy the application folder inside the container
-ADD app /mighty-quotes
+ADD . /mighty-quotes
 
 # Set the default directory where CMD will execute
 WORKDIR /mighty-quotes
